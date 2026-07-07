@@ -76,15 +76,18 @@ base_theme <-  theme(axis.text=element_text(size=7),
 
 
 # Plot data
-g1 <- ggplot(actions_by_source, mapping=aes(x=source, y=strategy, size=n)) +
+g1 <- ggplot(actions_by_source, mapping=aes(x=source, y=strategy, size=n)) + # fill=n
   geom_point() +
+  # geom_tile(color="black", lwd=0.2) +
   # Labels
   labs(x="", y="", tag="A") +
   # Legend
-  scale_size_continuous(name="# of actions") +
+  scale_size_continuous(name="# of actions", range=c(0.5, 3)) +
+  # scale_fill_gradientn(name="# of actions", colors=RColorBrewer::brewer.pal(9, "Blues")) +
   # Theme
   theme_bw() + base_theme +
   theme(legend.position="top",
+        legend.title.position = "top",
         axis.text.x = element_text(angle = 45, vjust = 1, hjust=1))
 g1
 
@@ -99,14 +102,15 @@ g2 <- ggplot(actions_tot, mapping=aes(x=n, y=strategy, fill=nsources)) +
   # Theme
   theme_bw() + base_theme +
   theme(axis.text.y=element_blank(),
-        legend.position = "top")
+        legend.position = "top",
+        legend.title.position = "top")
 g2
 
 # Merges
 g <- gridExtra::grid.arrange(g1, g2, nrow=1, widths=c(0.7, 0.3))
 
 # Export figure
-ggsave(g, filename=file.path(plotdir, "FigX_measures_by_source.png"), 
+ggsave(g, filename=file.path(plotdir, "Fig2_measures_by_source.png"), 
        width=6.5, height=4.5, units="in", dpi=600, bg="white")
 
 
@@ -115,6 +119,8 @@ ggsave(g, filename=file.path(plotdir, "FigX_measures_by_source.png"),
 
 # Build measures data
 measures <- measures_orig %>% 
+  # Simplify
+  select(strategy, attributes) %>% 
   # Split
   separate(attributes, sep=", ", into=paste0("attribute", 1:5)) %>% 
   # Gather
@@ -139,8 +145,8 @@ g <- ggplot(measures, aes(x=domain, y=strategy)) +
 g
 
 # Export figure
-ggsave(g, filename=file.path(plotdir, "FigX_measures_by_res_domain.png"), 
-       width=6.5, height=3.5, units="in", dpi=600, bg="white")
+ggsave(g, filename=file.path(plotdir, "Fig3_measures_by_res_domain.png"), 
+       width=6.5, height=3.75, units="in", dpi=600, bg="white")
 
 
 # Build data
@@ -148,6 +154,8 @@ ggsave(g, filename=file.path(plotdir, "FigX_measures_by_res_domain.png"),
 
 # Build measures data
 measures <- measures_orig %>% 
+  # Simplify
+  select(strategy, attributes) %>% 
   # Split
   separate(attributes, sep=", ", into=paste0("attribute", 1:5)) %>% 
   # Gather
@@ -190,7 +198,7 @@ g <- ggplot(measures, aes(x=attribute, y=strategy)) +
         panel.spacing = unit(0, "lines"))
 g
 
-ggsave(g, filename=file.path(plotdir, "FigX_measures_by_res_attribute.png"), 
+ggsave(g, filename=file.path(plotdir, "Fig4_measures_by_res_attribute_points.png"), 
        width=6.5, height=4.5, units="in", dpi=600, bg="white")
 
 
@@ -208,12 +216,12 @@ g <- ggplot(template, aes(x=attribute, y=strategy, fill=mark)) +
   scale_fill_discrete(na.value = "white", guide="none") +
   # Theme
   theme_bw() + base_theme +
-  theme(axis.text.x = element_text(angle = 90, vjust = 0.5, hjust=1),
+  theme(axis.text.x = element_text(angle = 45, vjust = 1, hjust=1),
         panel.spacing = unit(0, "lines"))
 g
 
-ggsave(g, filename=file.path(plotdir, "FigX_measures_by_res_attribute2.png"), 
-       width=8.5, height=4.0, units="in", dpi=600, bg="white")
+ggsave(g, filename=file.path(plotdir, "Fig4_measures_by_res_attribute_raster.png"), 
+       width=8.5, height=5.0, units="in", dpi=600, bg="white")
 
 
 
@@ -234,7 +242,7 @@ g <- ggplot(atts_by_source, mapping=aes(x=domain, y=source)) +
   theme(axis.text.x = element_text(angle = 45, vjust = 1, hjust=1))
 g
 
-ggsave(g, filename=file.path(plotdir, "FigX_domains_by_source.png"), 
+ggsave(g, filename=file.path(plotdir, "Fig5_domains_by_source.png"), 
        width=6.5, height=2.5, units="in", dpi=600, bg="white")
 
 

@@ -25,4 +25,11 @@ actions <- actions_orig %>%
   select(strategy, measure) %>% 
   unique()
 
+# Number of actions
+nrow(actions)
+
+# Number of strategies
+n_distinct(actions$strategy)
+
+
 write.csv(actions, file=file.path(tabledir, "Table1_mitigation_measures.csv"), row.names=F)
