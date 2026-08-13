@@ -52,7 +52,10 @@ actions_by_town <- actions_orig %>%
 # Plot data
 ################################################################################
 
-font_types <- ifelse(grepl("fish", levels(actions_by_town$strategy)), "bold", "plain")
+# Custom fonts
+font_faces <- ifelse(grepl("fish", levels(actions_by_town$strategy)), "bold", "plain")
+font_colors <- ifelse(grepl("fish", levels(actions_by_town$strategy)), "red", "black")
+
 
 # Base theme
 base_theme <-  theme(axis.text=element_text(size=7),
@@ -85,7 +88,7 @@ g1 <- ggplot(actions_by_town, mapping=aes(x=town, y=strategy, size=n)) + # fill=
   theme_bw() + base_theme +
   theme(legend.position="top",
         legend.title.position = "top",
-        axis.text.y=element_text(face=font_types),
+        axis.text.y=element_text(face=font_faces, color=font_colors),
         axis.text.x = element_text(angle = 45, vjust = 1, hjust=1, size=6))
 g1
 
