@@ -82,12 +82,13 @@ g1 <- ggplot(actions_by_town, mapping=aes(x=town, y=strategy, size=n)) + # fill=
   # Labels
   labs(x="", y="", tag="A") +
   # Legend
-  scale_size_continuous(name="# of actions", range=c(0.5, 3)) +
+  scale_size_continuous(name="# of actions", range=c(0.5, 3), breaks=seq(2,12, 2)) +
   # scale_fill_gradientn(name="# of actions", colors=RColorBrewer::brewer.pal(9, "Blues")) +
   # Theme
   theme_bw() + base_theme +
-  theme(legend.position="top",
-        legend.title.position = "top",
+  theme(legend.position=c(0.7, 0.897),
+        # legend.position="top",
+        # legend.title.position = "top",
         axis.text.y=element_text(face=font_faces, color=font_colors),
         axis.text.x = element_text(angle = 45, vjust = 1, hjust=1, size=6))
 g1
@@ -106,15 +107,16 @@ g2 <- ggplot(actions_tot, mapping=aes(x=n, y=strategy, fill=as.character(ntowns)
   # Theme
   theme_bw() + base_theme +
   theme(axis.text.y=element_blank(),
-        legend.position = "top",
-        legend.title.position = "top")
+        # legend.position = "top",
+        # legend.title.position = "top",
+        legend.position = c(0.6, 0.9))
 g2
 
 # Merges
 g <- gridExtra::grid.arrange(g1, g2, nrow=1, widths=c(0.78, 0.22))
 
 # Export figure
-ggsave(g, filename=file.path(plotdir, "FigX_measures_by_town.png"), 
-       width=6.5, height=6.5, units="in", dpi=600, bg="white")
+ggsave(g, filename=file.path(plotdir, "Fig2_measures_by_town.png"), 
+       width=6.5, height=5.75, units="in", dpi=600, bg="white")
 
 

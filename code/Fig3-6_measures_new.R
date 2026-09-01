@@ -110,7 +110,7 @@ g2
 g <- gridExtra::grid.arrange(g1, g2, nrow=1, widths=c(0.7, 0.3))
 
 # Export figure
-ggsave(g, filename=file.path(plotdir, "Fig2_measures_by_source.png"), 
+ggsave(g, filename=file.path(plotdir, "Fig3_measures_by_source.png"), 
        width=6.5, height=4.5, units="in", dpi=600, bg="white")
 
 
@@ -145,7 +145,7 @@ g <- ggplot(measures, aes(x=domain, y=strategy)) +
 g
 
 # Export figure
-ggsave(g, filename=file.path(plotdir, "Fig3_measures_by_res_domain.png"), 
+ggsave(g, filename=file.path(plotdir, "Fig4_measures_by_res_domain.png"), 
        width=6.5, height=3.75, units="in", dpi=600, bg="white")
 
 
@@ -198,7 +198,7 @@ g <- ggplot(measures, aes(x=attribute, y=strategy)) +
         panel.spacing = unit(0, "lines"))
 g
 
-ggsave(g, filename=file.path(plotdir, "Fig4_measures_by_res_attribute_points.png"), 
+ggsave(g, filename=file.path(plotdir, "Fig5_measures_by_res_attribute_points.png"), 
        width=6.5, height=4.5, units="in", dpi=600, bg="white")
 
 
@@ -220,7 +220,7 @@ g <- ggplot(template, aes(x=attribute, y=strategy, fill=mark)) +
         panel.spacing = unit(0, "lines"))
 g
 
-ggsave(g, filename=file.path(plotdir, "Fig4_measures_by_res_attribute_raster.png"), 
+ggsave(g, filename=file.path(plotdir, "Fig5_measures_by_res_attribute_raster.png"), 
        width=8.5, height=5.0, units="in", dpi=600, bg="white")
 
 
@@ -242,7 +242,7 @@ g <- ggplot(atts_by_source, mapping=aes(x=domain, y=source)) +
   theme(axis.text.x = element_text(angle = 45, vjust = 1, hjust=1))
 g
 
-ggsave(g, filename=file.path(plotdir, "Fig5_domains_by_source.png"), 
+ggsave(g, filename=file.path(plotdir, "Fig6_domains_by_source.png"), 
        width=6.5, height=2.5, units="in", dpi=600, bg="white")
 
 
