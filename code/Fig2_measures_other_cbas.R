@@ -35,6 +35,7 @@ actions_tot <- actions_orig %>%
 
 # Town name
 towns <- actions_orig %>% 
+  # Summarize
   group_by(town) %>% 
   summarize(nstrategies=n_distinct(strategy)) %>% 
   ungroup() %>% 
@@ -63,6 +64,7 @@ base_theme <-  theme(axis.text=element_text(size=7),
                    legend.text=element_text(size=7),
                    legend.title=element_text(size=8),
                    plot.tag=element_text(size=9),
+                   plot.tag.position = c(0.05, 1),
                    strip.text = element_text(size=8),
                    # Gridlines
                    panel.grid.major.x = element_blank(), 
@@ -90,13 +92,13 @@ g1 <- ggplot(actions_by_town, mapping=aes(x=town, y=strategy, size=n)) + # fill=
         # legend.position="top",
         # legend.title.position = "top",
         axis.text.y=element_text(face=font_faces, color=font_colors),
-        axis.text.x = element_text(angle = 45, vjust = 1, hjust=1, size=6))
+        axis.text.x = element_text(angle = 45, vjust = 1, hjust=1)) # , size=6
 g1
 
 g2 <- ggplot(actions_tot, mapping=aes(x=n, y=strategy, fill=as.character(ntowns))) +
   geom_bar(stat="identity", color="grey30", lwd=0.2) +
   # Labels
-  labs(x="# of actions\n\n\n\n\n\n\n\n", 
+  labs(x="# of actions\n\n\n\n\n\n\n\n\n\n", 
        y="", 
        tag="B") +
   # Legend
@@ -113,7 +115,7 @@ g2 <- ggplot(actions_tot, mapping=aes(x=n, y=strategy, fill=as.character(ntowns)
 g2
 
 # Merges
-g <- gridExtra::grid.arrange(g1, g2, nrow=1, widths=c(0.78, 0.22))
+g <- gridExtra::grid.arrange(g1, g2, nrow=1, widths=c(0.82, 0.18))
 
 # Export figure
 ggsave(g, filename=file.path(plotdir, "Fig2_measures_by_town.png"), 

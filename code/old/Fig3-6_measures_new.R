@@ -9,6 +9,7 @@ rm(list = ls())
 # Packages
 library(stringr)
 library(tidyverse)
+library(ggtext)
 
 # Directories
 tabledir <- "tables"
@@ -51,7 +52,10 @@ actions_by_source <- actions_orig %>%
   mutate(source=factor(source, levels=sources),
          strategy=factor(strategy, levels=actions_tot$strategy))
 
-
+actions_by_source_full <- expand.grid(source=sources, 
+                                      domain_id=domain_ids) %>% 
+  # Add supported
+  left_join(actions_by_source)
 
 
 # Plot data
@@ -111,7 +115,7 @@ g <- gridExtra::grid.arrange(g1, g2, nrow=1, widths=c(0.7, 0.3))
 
 # Export figure
 ggsave(g, filename=file.path(plotdir, "Fig3_measures_by_source.png"), 
-       width=6.5, height=4.5, units="in", dpi=600, bg="white")
+       width=6.5, height=4.75, units="in", dpi=600, bg="white")
 
 
 # Build and plot data
@@ -131,12 +135,12 @@ measures <- measures_orig %>%
   # Add
   left_join(att_key) %>% 
   # Order
-  mutate(dimension=factor(dimension, levels=c("Socioeconomic", "Governance", "Ecological")))
+  mutate(dimension=factor(dimension, levels=c("Socioeconomic", "Governance", "Ecological"))) 
 
 # Plot
 g <- ggplot(measures, aes(x=domain, y=strategy)) +
   facet_wrap(~dimension) +
-  geom_point() +
+  geom_tile() + # geom_tile
   # Labels
   labs(x="Resilience domain", y="") +
   # Theme
@@ -147,6 +151,7 @@ g
 # Export figure
 ggsave(g, filename=file.path(plotdir, "Fig4_measures_by_res_domain.png"), 
        width=6.5, height=3.75, units="in", dpi=600, bg="white")
+
 
 
 # Build data
