@@ -52,7 +52,11 @@ actions_by_source <- actions_orig %>%
   mutate(source=factor(source, levels=sources),
          strategy=factor(strategy, levels=actions_tot$strategy))
 
+# Number of strategies
+n_distinct(actions_tot$strategy)
 
+# Number of strategies by source
+table(actions_by_source$source)
 
 
 # Plot data

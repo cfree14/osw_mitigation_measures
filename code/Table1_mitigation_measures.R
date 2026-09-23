@@ -17,15 +17,20 @@ plotdir <- "figures"
 # Read data
 actions_orig <- readxl::read_excel("data/actions/action_database.xlsx", sheet=1)
 
+
 # Prep data
 ################################################################################
 
 actions <- actions_orig %>% 
+  # Remove ignore
   filter(is.na(ignore_yn)) %>% 
+  # Id unique
   select(strategy, measure) %>% 
-  unique()
+  unique() %>% 
+  # Sort
+  arrange(strategy, measure)
 
-# Number of actions
+# Number of measures
 nrow(actions)
 
 # Number of strategies
